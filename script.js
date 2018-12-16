@@ -6,12 +6,32 @@ const btnStart = document.querySelector('.btnStart');
 let animiationGame = requestAnimationFrame(playGame);
 let gamePlay = false;
 
+btnStart.addEventListener('click', startGame);
+document.addEventListener('keydown', pressKeyOn);
+document.addEventListener('keyup', pressKeyOff);
 let keys = {
     ArrowUp: false,
     ArrowDown: false,
     ArrowLeft: false,
     ArrowRight: false
 };
+
+function startGame() {
+    var div = document.createElement('div');
+    div.setAttribute('class', 'playerCar');
+    div.x = 250;
+    div.y = 500;
+    container.appendChild(div);
+    gamePlay = true;
+}
+
+function pressKeyOn(){
+
+}
+
+function pressKeyOff() {
+
+}
 
 function playGame() {
     if (gamePlay) {
