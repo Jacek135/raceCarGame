@@ -35,6 +35,17 @@
     border-radius: 2px;
 }
 
+.road:before{
+    content: "|";
+    vertical-align: top;
+    color:white;
+    width:1px;
+    height:10px;
+    line-height: 30px;
+    left:50%;
+    position: absolute;
+}
+
 .playerCar {
     position: absolute;
     height: 80px;
