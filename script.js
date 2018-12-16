@@ -27,6 +27,7 @@ function startGame() {
     container.appendChild(div);
     gamePlay = true;
     player = {
+        ele:div,
         speed: 1,
         lives: 3,
         gameScore: 0,
@@ -48,16 +49,20 @@ function startBoard () {
     }
 }
 
-function pressKeyOn(){
-
+function pressKeyOn(event){
+    event.preventDefault();
+    // console.log(event.key);
+    keys[event.key] = true;
 }
 
-function pressKeyOff() {
-
+function pressKeyOff(event) {
+    event.preventDefault();
+    // console.log(event.key);
+    keys[event.key] = false;
 }
 
 function updateDash() {
-    console.log(player);
+    // console.log(player);
     scoreDash.innerHTML = player.score;
     lifeDash.innerHTML = player.lives;
     speedDash.innerHTML = player.speed;
@@ -66,6 +71,28 @@ function updateDash() {
 function playGame() {
     if (gamePlay) {
         updateDash();
+
+        if(keys.ArrowUp) {
+            player.ele.y-=1;
+            player.speed = player.speed < 20 ? (player.speed+0.05):20
+        }
+
+        if(keys.ArrowDown) {
+            player.ele.y+=1;
+            player.speed = player.speed > 20 ? (player.speed-0.2):0;
+        }
+
+        if(keys.ArrowRight){
+            player.ele.x += (player.speed/4)
+        }
+
+        if(keys.ArrowLeft){
+            player.ele.x -= (player.speed/4)
+        }
+
+        player.ele.style.top = player.ele.y + 'px';
+        player.ele.style.left = player.ele.x + 'px';
+
     }
     animiationGame = requestAnimationFrame(playGame);
 }
