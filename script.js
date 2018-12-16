@@ -9,6 +9,8 @@ let gamePlay = false;
 btnStart.addEventListener('click', startGame);
 document.addEventListener('keydown', pressKeyOn);
 document.addEventListener('keyup', pressKeyOff);
+let player;
+
 let keys = {
     ArrowUp: false,
     ArrowDown: false,
@@ -17,12 +19,20 @@ let keys = {
 };
 
 function startGame() {
+    btnStart.style.display='none';
     var div = document.createElement('div');
     div.setAttribute('class', 'playerCar');
     div.x = 250;
     div.y = 500;
     container.appendChild(div);
     gamePlay = true;
+    player = {
+        speed: 1,
+        lives: 3,
+        gameScore: 0,
+        carstoPass: 3,
+        score: 0
+    }
 }
 
 function pressKeyOn(){
@@ -33,9 +43,16 @@ function pressKeyOff() {
 
 }
 
+function updateDash() {
+    console.log(player);
+    scoreDash.innerHTML = player.score;
+    lifeDash.innerHTML = player.lives;
+    speedDash.innerHTML = player.speed;
+}
+
 function playGame() {
     if (gamePlay) {
-        console.log('Game in play');
+        updateDash();
     }
     animiationGame = requestAnimationFrame(playGame);
 }
