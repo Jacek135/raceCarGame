@@ -70,10 +70,23 @@ function updateDash() {
 function moveRoad() {
     let tempRoad = document.querySelectorAll('.road');
     let previousRoad = tempRoad[0].offsetLeft;
+    let previousWidth = tempRoad[0].width;
+    const pSpeed = player.speed;
     for (let x = 0; x < tempRoad.length; x++) {
-        let num = tempRoad[x].offsetTop + player.speed;
+        let num = tempRoad[x].offsetTop + pSpeed;
         if (num > 600) {
             num = num - 650;
+            let mover = tempRoad[x].offsetLeft + (Math.floor(Math.random()*6-3));
+            let roadWidth = (Math.floor(Math.random()*11)-5)+previousWidth;
+            if(roadWidth<200) roadWidth = 200;
+            if(roadWidth>400) roadWidth = 400;
+            if(mover<100) mover = 100;
+            if(mover>600) mover = 600;
+            tempRoad[x].style.left = mover + 'px';
+            tempRoad[x].style.width = roadWidth + 'px';
+            previousRoad = tempRoad[x].offsetLeft;
+            previousWidth = tempRoad[x].width;
+
         }
         tempRoad[x].style.top = num + 'px';
     }
