@@ -45,7 +45,6 @@ function startBoard() {
         div.style.top = (x * 50) + 'px'
         div.style.width = player.roadwidth + 'px';
         container.appendChild(div)
-
     }
 }
 
@@ -65,12 +64,26 @@ function updateDash() {
     // console.log(player);
     scoreDash.innerHTML = player.score;
     lifeDash.innerHTML = player.lives;
-    speedDash.innerHTML = Math.round(player.speed * 13);
+    speedDash.innerHTML = Math.round(player.speed * 17);
 }
+
+function moveRoad() {
+    let tempRoad = document.querySelectorAll('.road');
+    let previousRoad = tempRoad[0].offsetLeft;
+    for (let x = 0; x < tempRoad.length; x++) {
+        let num = tempRoad[x].offsetTop + player.speed;
+        if (num > 600) {
+            num = num - 650;
+        }
+        tempRoad[x].style.top = num + 'px';
+    }
+};
 
 function playGame() {
     if (gamePlay) {
         updateDash();
+
+        moveRoad();
 
         if (keys.ArrowUp) {
             if (player.ele.y > 400) {
