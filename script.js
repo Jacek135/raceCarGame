@@ -19,7 +19,7 @@ let keys = {
 };
 
 function startGame() {
-    btnStart.style.display='none';
+    btnStart.style.display = 'none';
     var div = document.createElement('div');
     div.setAttribute('class', 'playerCar');
     div.x = 250;
@@ -27,29 +27,29 @@ function startGame() {
     container.appendChild(div);
     gamePlay = true;
     player = {
-        ele:div,
+        ele: div,
         speed: 1,
         lives: 3,
         gameScore: 0,
         carstoPass: 3,
         score: 0,
-        roadwidth:250
+        roadwidth: 250
     }
     startBoard();
 }
 
-function startBoard () {
-    for(let x=0; x<13; x++){
+function startBoard() {
+    for (let x = 0; x < 13; x++) {
         let div = document.createElement('div');
         div.setAttribute('class', 'road');
-        div.style.top = (x*50)+'px'
+        div.style.top = (x * 50) + 'px'
         div.style.width = player.roadwidth + 'px';
         container.appendChild(div)
 
     }
 }
 
-function pressKeyOn(event){
+function pressKeyOn(event) {
     event.preventDefault();
     // console.log(event.key);
     keys[event.key] = true;
@@ -65,29 +65,33 @@ function updateDash() {
     // console.log(player);
     scoreDash.innerHTML = player.score;
     lifeDash.innerHTML = player.lives;
-    speedDash.innerHTML = player.speed;
+    speedDash.innerHTML = Math.round(player.speed * 13);
 }
 
 function playGame() {
     if (gamePlay) {
         updateDash();
 
-        if(keys.ArrowUp) {
-            player.ele.y-=1;
-            player.speed = player.speed < 20 ? (player.speed+0.05):20
+        if (keys.ArrowUp) {
+            if (player.ele.y > 400) {
+                player.ele.y -= 1;
+            }
+            player.speed = player.speed < 20 ? (player.speed + 0.05) : 20
         }
 
-        if(keys.ArrowDown) {
-            player.ele.y+=1;
-            player.speed = player.speed > 20 ? (player.speed-0.2):0;
+        if (keys.ArrowDown) {
+            if (player.ele.y < 500) {
+                player.ele.y += 1;
+            }
+            player.speed = player.speed > 0 ? (player.speed - 0.2) : 0;
         }
 
-        if(keys.ArrowRight){
-            player.ele.x += (player.speed/4)
+        if (keys.ArrowRight) {
+            player.ele.x += (player.speed / 4)
         }
 
-        if(keys.ArrowLeft){
-            player.ele.x -= (player.speed/4)
+        if (keys.ArrowLeft) {
+            player.ele.x -= (player.speed / 4)
         }
 
         player.ele.style.top = player.ele.y + 'px';
