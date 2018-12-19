@@ -70,18 +70,18 @@ function updateDash() {
 function moveRoad() {
     let tempRoad = document.querySelectorAll('.road');
     let previousRoad = tempRoad[0].offsetLeft;
-    let previousWidth = tempRoad[0].width;
-    const pSpeed = player.speed;
+    let previousWidth = tempRoad[0].offsetWidth;
+    const pSpeed = Math.floor(player.speed);
     for (let x = 0; x < tempRoad.length; x++) {
         let num = tempRoad[x].offsetTop + pSpeed;
         if (num > 600) {
             num = num - 650;
-            let mover = tempRoad[x].offsetLeft + (Math.floor(Math.random()*6-3));
-            let roadWidth = (Math.floor(Math.random()*11)-5)+previousWidth;
-            if(roadWidth<200) roadWidth = 200;
-            if(roadWidth>400) roadWidth = 400;
-            if(mover<100) mover = 100;
-            if(mover>600) mover = 600;
+            let mover = tempRoad[x].offsetLeft + (Math.floor(Math.random() * 6 - 3));
+            let roadWidth = (Math.floor(Math.random() * 11) - 5) + previousWidth;
+            if (roadWidth < 200) roadWidth = 200;
+            if (roadWidth > 400) roadWidth = 400;
+            if (mover < 100) mover = 100;
+            if (mover > 600) mover = 600;
             tempRoad[x].style.left = mover + 'px';
             tempRoad[x].style.width = roadWidth + 'px';
             previousRoad = tempRoad[x].offsetLeft;
@@ -90,13 +90,17 @@ function moveRoad() {
         }
         tempRoad[x].style.top = num + 'px';
     }
+    return {
+        'width': previousWidth,
+        'left': previousRoad
+    };
 };
 
 function playGame() {
     if (gamePlay) {
         updateDash();
 
-        moveRoad();
+        let roadPara = moveRoad();
 
         if (keys.ArrowUp) {
             if (player.ele.y > 400) {
@@ -118,6 +122,13 @@ function playGame() {
 
         if (keys.ArrowLeft) {
             player.ele.x -= (player.speed / 4)
+        }
+
+        if ((player.ele.x + 40) < roadPara.left || (player.ele.x > (roadPara.left + roadPara.width))) {
+            if (player.ele.y < 500) {
+                player.ele.y += +1;
+            }
+            player.speed = player.speed > 0 ? (player.speed - 0.2) : 1;
         }
 
         player.ele.style.top = player.ele.y + 'px';
